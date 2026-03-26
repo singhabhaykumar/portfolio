@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abhay Kumar Singh | Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0B0F0C; --primary: #1F7A63; --accent: #C1A57B;
+    --text: #E8E8E8; --muted: #8A9A93; --card: #111814;
+    --border: rgba(31, 122, 99, 0.2);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.7; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 20px 60px; display: flex; justify-content: space-between; align-items: center; background: rgba(11,15,12,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); transition: all 0.3s; }
+  nav.scrolled { padding: 14px 60px; background: rgba(11,15,12,0.97); }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--accent); letter-spacing: 1px; text-decoration: none; }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.82rem; font-weight: 500; letter-spacing: 1.2px; text-transform: uppercase; transition: color 0.3s; position: relative; }
+  .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width 0.3s; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-links a:hover::after { width: 100%; }
+
+  #hero { min-height: 100vh; display: flex; align-items: center; position: relative; padding: 120px 60px 80px; overflow: hidden; }
+  .hero-bg-glow { position: absolute; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(31,122,99,0.12) 0%, transparent 70%); top: -100px; right: -100px; pointer-events: none; }
+  .hero-bg-glow2 { position: absolute; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(193,165,123,0.07) 0%, transparent 70%); bottom: 0; left: 100px; pointer-events: none; }
+  .hero-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; width: 100%; }
+  .hero-text { animation: fadeUp 0.8s ease both; }
+  .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--primary); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+  .hero-eyebrow::before { content: ''; width: 40px; height: 1px; background: var(--primary); }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 900; line-height: 1.05; margin-bottom: 8px; color: var(--text); }
+  .hero-name-accent { color: var(--accent); display: block; }
+  .hero-subtitle { font-size: 1.1rem; color: var(--muted); margin: 24px 0 36px; max-width: 440px; font-weight: 300; line-height: 1.8; }
+  .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn { padding: 14px 32px; border-radius: 4px; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.5px; text-decoration: none; transition: all 0.3s; cursor: pointer; display: inline-block; }
+  .btn-primary { background: var(--primary); color: #fff; border: 1px solid var(--primary); }
+  .btn-primary:hover { background: transparent; color: var(--primary); }
+  .btn-outline { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+  .btn-outline:hover { background: var(--accent); color: var(--bg); }
+
+  .hero-photo { display: flex; justify-content: center; animation: fadeUp 0.8s ease 0.2s both; }
+  .photo-frame { position: relative; width: 320px; height: 400px; }
+  .photo-frame::before { content: ''; position: absolute; inset: -2px; background: linear-gradient(135deg, var(--primary), var(--accent), var(--primary)); border-radius: 12px; z-index: 0; }
+  .photo-frame::after { content: ''; position: absolute; top: 16px; left: 16px; width: 100%; height: 100%; border: 2px solid var(--border); border-radius: 12px; z-index: -1; }
+  .photo-frame img { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; object-position: top center; border-radius: 10px; display: block; }
+  .photo-badge { position: absolute; bottom: -16px; right: -16px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 18px; z-index: 2; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--accent); text-align: center; }
+  .photo-badge strong { display: block; font-size: 1.4rem; color: var(--primary); font-family: 'Playfair Display', serif; }
+
+  section { padding: 100px 60px; max-width: 1200px; margin: 0 auto; }
+  .section-label { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--primary); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+  .section-label::before { content: ''; width: 30px; height: 1px; background: var(--primary); }
+  h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: var(--text); margin-bottom: 60px; line-height: 1.2; }
+  h2 span { color: var(--accent); }
+
+  #about .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  .about-text p { color: var(--muted); margin-bottom: 20px; font-weight: 300; line-height: 1.9; }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 40px; }
+  .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 24px; transition: border-color 0.3s; }
+  .stat-card:hover { border-color: var(--primary); }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 900; color: var(--accent); line-height: 1; margin-bottom: 6px; }
+  .stat-label { font-size: 0.82rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+  #skills { background: var(--card); max-width: 100%; padding: 100px 0; }
+  #skills .inner { max-width: 1200px; margin: 0 auto; padding: 0 60px; }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .skill-category { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 28px; transition: all 0.3s; position: relative; overflow: hidden; }
+  .skill-category::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--primary), var(--accent)); transform: scaleX(0); transform-origin: left; transition: transform 0.4s; }
+  .skill-category:hover::before { transform: scaleX(1); }
+  .skill-category:hover { border-color: var(--primary); transform: translateY(-4px); }
+  .skill-cat-title { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-tag { background: rgba(31,122,99,0.1); border: 1px solid rgba(31,122,99,0.25); color: var(--text); font-size: 0.82rem; padding: 5px 12px; border-radius: 20px; transition: all 0.2s; }
+  .skill-tag:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 28px; }
+  .project-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 36px; transition: all 0.3s; position: relative; overflow: hidden; }
+  .project-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 0; background: linear-gradient(180deg, transparent, rgba(31,122,99,0.05)); transition: height 0.4s; }
+  .project-card:hover { border-color: var(--primary); transform: translateY(-6px); }
+  .project-card:hover::after { height: 100%; }
+  .project-num { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 900; color: rgba(31,122,99,0.1); position: absolute; top: 20px; right: 28px; line-height: 1; }
+  .project-title { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .project-period { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--accent); margin-bottom: 16px; letter-spacing: 1px; }
+  .project-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.8; margin-bottom: 24px; font-weight: 300; }
+  .project-tech { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .tech-chip { background: rgba(193,165,123,0.1); border: 1px solid rgba(193,165,123,0.2); color: var(--accent); font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; padding: 4px 10px; border-radius: 4px; }
+  .project-link { display: inline-flex; align-items: center; gap: 6px; color: var(--primary); font-size: 0.85rem; font-weight: 500; text-decoration: none; letter-spacing: 0.5px; transition: gap 0.2s; }
+  .project-link:hover { gap: 10px; }
+  .project-link::after { content: '→'; }
+
+  .edu-timeline { position: relative; padding-left: 40px; }
+  .edu-timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 0; width: 1px; background: linear-gradient(180deg, var(--primary), transparent); }
+  .edu-item { position: relative; margin-bottom: 48px; padding: 28px 32px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; transition: border-color 0.3s; }
+  .edu-item::before { content: ''; position: absolute; left: -46px; top: 28px; width: 12px; height: 12px; border-radius: 50%; background: var(--primary); border: 3px solid var(--bg); box-shadow: 0 0 0 1px var(--primary); }
+  .edu-item:hover { border-color: var(--primary); }
+  .edu-degree { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .edu-school { color: var(--accent); font-size: 0.9rem; margin-bottom: 4px; font-weight: 500; }
+  .edu-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); letter-spacing: 1px; margin-bottom: 10px; }
+  .edu-cgpa { display: inline-block; background: rgba(31,122,99,0.1); border: 1px solid rgba(31,122,99,0.3); color: var(--primary); font-size: 0.8rem; padding: 3px 10px; border-radius: 20px; font-family: 'JetBrains Mono', monospace; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .list-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 32px; }
+  .list-card h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--accent); margin-bottom: 20px; }
+  .list-item { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid rgba(31,122,99,0.1); }
+  .list-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .list-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--primary); margin-top: 8px; flex-shrink: 0; }
+  .list-item-text { color: var(--muted); font-size: 0.88rem; line-height: 1.6; }
+  .list-item-text strong { color: var(--text); display: block; font-size: 0.92rem; margin-bottom: 2px; }
+
+  /* ==============================
+     RESUME SECTION
+     ============================== */
+  #resume { max-width: 1200px; margin: 0 auto; padding: 80px 60px; }
+
+  .resume-download-bar { text-align: center; margin-bottom: 48px; }
+  .resume-download-bar p { color: var(--muted); font-weight: 300; margin-bottom: 20px; font-size: 0.95rem; }
+  .resume-download-btn { display: inline-flex; align-items: center; gap: 10px; background: var(--primary); color: #fff; padding: 14px 32px; border-radius: 4px; font-size: 0.9rem; font-weight: 500; text-decoration: none; letter-spacing: 0.5px; transition: all 0.3s; border: 1px solid var(--primary); }
+  .resume-download-btn:hover { background: transparent; color: var(--primary); }
+
+  .resume-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; position: relative; }
+  .resume-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary)); }
+
+  .resume-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 24px; padding: 40px 48px 32px; background: rgba(31,122,99,0.05); border-bottom: 1px solid var(--border); }
+  .resume-name { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 900; color: var(--text); margin-bottom: 6px; letter-spacing: -0.5px; }
+  .resume-tagline { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--primary); letter-spacing: 2px; }
+  .resume-contacts { display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
+  .resume-contacts a { color: var(--muted); text-decoration: none; font-size: 0.84rem; transition: color 0.2s; }
+  .resume-contacts a:hover { color: var(--accent); }
+
+  .resume-block { padding: 32px 48px; border-bottom: 1px solid var(--border); }
+  .resume-block:last-child { border-bottom: none; }
+
+  .resume-section-title { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+  .resume-section-title::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--border), transparent); }
+
+  .resume-skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 8px 32px; }
+  .resume-skills-grid > div { display: flex; align-items: baseline; gap: 10px; font-size: 0.88rem; padding: 6px 0; border-bottom: 1px dashed rgba(31,122,99,0.15); }
+  .rskill-cat { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--accent); white-space: nowrap; min-width: 100px; text-transform: uppercase; letter-spacing: 1px; }
+  .rskill-val { color: var(--muted); font-size: 0.84rem; }
+
+  .resume-entry { margin-bottom: 28px; }
+  .resume-entry:last-child { margin-bottom: 0; }
+  .resume-entry-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 4px; }
+  .resume-entry-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--text); }
+  .resume-entry-date { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--accent); letter-spacing: 1px; white-space: nowrap; }
+  .resume-entry-sub { color: var(--muted); font-size: 0.84rem; margin-bottom: 12px; }
+  .resume-entry-sub a { color: var(--primary); text-decoration: none; font-weight: 500; }
+  .resume-entry-sub a:hover { text-decoration: underline; }
+
+  .resume-bullets { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .resume-bullets li { color: var(--muted); font-size: 0.88rem; line-height: 1.7; padding-left: 16px; position: relative; }
+  .resume-bullets li::before { content: '▸'; position: absolute; left: 0; color: var(--primary); font-size: 0.75rem; }
+  .resume-bullets li a { color: var(--accent); text-decoration: none; }
+  .resume-bullets li a:hover { text-decoration: underline; }
+  .resume-bullets li strong { color: var(--text); }
+
+  /* CONTACT */
+  #contact { text-align: center; background: var(--card); max-width: 100%; padding: 100px 60px; border-top: 1px solid var(--border); }
+  #contact .inner { max-width: 600px; margin: 0 auto; }
+  .contact-links { display: flex; justify-content: center; gap: 20px; margin-top: 40px; flex-wrap: wrap; }
+  .contact-link { display: flex; align-items: center; gap: 8px; padding: 14px 24px; border: 1px solid var(--border); border-radius: 8px; color: var(--text); text-decoration: none; font-size: 0.9rem; transition: all 0.3s; background: var(--bg); }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-3px); }
+  .contact-link svg { width: 18px; height: 18px; fill: currentColor; }
+
+  footer { text-align: center; padding: 30px; color: var(--muted); font-size: 0.8rem; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  .menu-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; }
+  .menu-toggle span { width: 24px; height: 2px; background: var(--text); transition: all 0.3s; }
+
+  @media (max-width: 900px) {
+    nav { padding: 18px 24px; }
+    .menu-toggle { display: flex; }
+    .nav-links { display: none; position: fixed; top: 70px; left: 0; right: 0; background: rgba(11,15,12,0.98); flex-direction: column; padding: 30px; gap: 24px; border-bottom: 1px solid var(--border); }
+    .nav-links.open { display: flex; }
+    #hero { padding: 100px 24px 60px; }
+    .hero-content { grid-template-columns: 1fr; gap: 50px; text-align: center; }
+    .hero-photo { order: -1; }
+    .photo-frame { width: 240px; height: 300px; }
+    .hero-eyebrow, .hero-cta { justify-content: center; }
+    .hero-subtitle { margin-left: auto; margin-right: auto; }
+    section { padding: 70px 24px; }
+    #about .about-grid, .two-col { grid-template-columns: 1fr; }
+    .about-stats { grid-template-columns: 1fr 1fr; }
+    #skills .inner, #contact .inner { padding: 0 24px; }
+    #contact { padding: 70px 24px; }
+    #resume { padding: 60px 24px; }
+    .resume-header { flex-direction: column; padding: 28px 24px 24px; }
+    .resume-contacts { align-items: flex-start; }
+    .resume-block { padding: 24px; }
+    .resume-skills-grid { grid-template-columns: 1fr; }
+    .resume-entry-header { flex-direction: column; }
+  }
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">AKS</a>
+  <button class="menu-toggle" id="menuToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#resume">Resume</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-glow"></div>
+  <div class="hero-bg-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-eyebrow">Computer Science Engineer</div>
+      <h1>Abhay Kumar<span class="hero-name-accent">Singh</span></h1>
+      <p class="hero-subtitle">B.Tech CSE student at Lovely Professional University — passionate about Cloud Computing, Full-Stack Development, and building systems that matter.</p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="#resume" class="btn btn-outline">View Resume</a>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <div class="photo-frame">
+        <img src="https://avatars.githubusercontent.com/singhabhaykumar" alt="Abhay Kumar Singh" onerror="this.style.background='linear-gradient(135deg,#1F7A63 0%,#C1A57B 100%)'" />
+        <div class="photo-badge"><strong>LPU</strong>B.Tech CSE</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">Get to know me</div>
+  <h2>About <span>Me</span></h2>
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <p>I'm Abhay Kumar Singh, a Computer Science and Engineering student at Lovely Professional University, Punjab. I'm passionate about building real-world software systems and exploring emerging technologies in cloud computing and backend development.</p>
+      <p>From developing a Banking Management System in C++ to engineering an Employee Management System with Java and MySQL, I love turning ideas into functional, scalable solutions. I'm constantly sharpening my problem-solving skills through competitive programming and hands-on projects.</p>
+      <p>Beyond code, I've volunteered with NGOs, anchored school-level events, and participated in group discussions — someone who believes technology is best when paired with strong communication and leadership.</p>
+    </div>
+    <div>
+      <div class="about-stats">
+        <div class="stat-card"><div class="stat-num">100+</div><div class="stat-label">DSA Problems Solved</div></div>
+        <div class="stat-card"><div class="stat-num">2+</div><div class="stat-label">Projects Built</div></div>
+        <div class="stat-card"><div class="stat-num">4+</div><div class="stat-label">Certifications</div></div>
+        <div class="stat-card"><div class="stat-num">3+</div><div class="stat-label">Years of Learning</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<div id="skills">
+  <div class="inner">
+    <div class="section-label">What I work with</div>
+    <h2>Technical <span>Skills</span></h2>
+    <div class="skills-grid reveal">
+      <div class="skill-category"><div class="skill-cat-title">Languages</div><div class="skill-tags"><span class="skill-tag">C</span><span class="skill-tag">C++</span><span class="skill-tag">Java</span></div></div>
+      <div class="skill-category"><div class="skill-cat-title">Cloud Platforms</div><div class="skill-tags"><span class="skill-tag">AWS</span><span class="skill-tag">EC2</span><span class="skill-tag">S3</span><span class="skill-tag">RDS</span><span class="skill-tag">IAM</span><span class="skill-tag">VPC</span><span class="skill-tag">Azure</span></div></div>
+      <div class="skill-category"><div class="skill-cat-title">DevOps & Tools</div><div class="skill-tags"><span class="skill-tag">Docker</span><span class="skill-tag">Kubernetes</span><span class="skill-tag">Git</span><span class="skill-tag">GitHub</span></div></div>
+      <div class="skill-category"><div class="skill-cat-title">Web Technologies</div><div class="skill-tags"><span class="skill-tag">HTML</span><span class="skill-tag">CSS</span><span class="skill-tag">JavaScript</span></div></div>
+      <div class="skill-category"><div class="skill-cat-title">Database</div><div class="skill-tags"><span class="skill-tag">MySQL</span><span class="skill-tag">JDBC</span></div></div>
+      <div class="skill-category"><div class="skill-cat-title">Core Competencies</div><div class="skill-tags"><span class="skill-tag">DSA</span><span class="skill-tag">OOP</span><span class="skill-tag">Problem Solving</span><span class="skill-tag">Leadership</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">What I've built</div>
+  <h2>Featured <span>Projects</span></h2>
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="project-num">01</div>
+      <div class="project-title">Banking Management System</div>
+      <div class="project-period">Aug 2025 – Sep 2025</div>
+      <p class="project-desc">Designed real-world banking operations including account management, deposits, withdrawals, balance inquiries, and transaction tracking. Built a menu-driven system with modular C++ architecture and file-based data persistence.</p>
+      <div class="project-tech"><span class="tech-chip">C++</span><span class="tech-chip">OOP</span><span class="tech-chip">STL</span><span class="tech-chip">File Handling</span></div>
+      <a href="https://github.com/singhabhaykumar/Banking-Management-System" target="_blank" class="project-link">View on GitHub</a>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-num">02</div>
+      <div class="project-title">Employee Management System</div>
+      <div class="project-period">Jun 2025 – Jul 2025</div>
+      <p class="project-desc">Engineered a system to manage employee records with structured data storage. Integrated JDBC with MySQL for CRUD operations with exception handling, logging, and validation in a clean console-based interface.</p>
+      <div class="project-tech"><span class="tech-chip">Java</span><span class="tech-chip">JDBC</span><span class="tech-chip">MySQL</span><span class="tech-chip">Maven</span></div>
+      <a href="https://github.com/singhabhaykumar/Employee-Management-System" target="_blank" class="project-link">View on GitHub</a>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" style="background:none;">
+  <div class="section-label">Academic background</div>
+  <h2>Education &amp; <span>Training</span></h2>
+  <div class="edu-timeline reveal">
+    <div class="edu-item"><div class="edu-degree">B.Tech — Computer Science & Engineering</div><div class="edu-school">Lovely Professional University, Phagwara, Punjab</div><div class="edu-meta">Aug 2023 – Present</div><span class="edu-cgpa">CGPA: 6.46</span></div>
+    <div class="edu-item"><div class="edu-degree">Intermediate (12th)</div><div class="edu-school">Kendriya Vidyalaya Sukna, Siliguri, WB</div><div class="edu-meta">Apr 2021 – Mar 2022</div><span class="edu-cgpa">CGPA: 6.6</span></div>
+    <div class="edu-item"><div class="edu-degree">Matriculation (10th)</div><div class="edu-school">Kendriya Vidyalaya INS Chilka, Khurda, Odisha</div><div class="edu-meta">Apr 2019 – Mar 2020</div><span class="edu-cgpa">CGPA: 6.9</span></div>
+    <div class="edu-item"><div class="edu-degree">Summer Training — OOP using C++</div><div class="edu-school">Lovely Professional University (LPU), Punjab</div><div class="edu-meta">Jul 2025 – Aug 2025</div><p style="color:var(--muted);font-size:0.88rem;margin-top:10px;">Intensive training on OOP concepts: encapsulation, inheritance, polymorphism, abstraction. Solved 100+ problems to sharpen programming analysis.</p></div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS & ACHIEVEMENTS -->
+<section id="certifications">
+  <div class="section-label">Recognition & Growth</div>
+  <h2>Certifications &amp; <span>Achievements</span></h2>
+  <div class="two-col reveal">
+    <div class="list-card">
+      <h3>🏅 Certifications</h3>
+      <div class="list-item"><div class="list-dot"></div><div class="list-item-text"><strong>Master Generative AI and Generative AI Tools</strong>Infosys — Aug 2025</div></div>
+      <div class="list-item"><div class="list-dot"></div><div class="list-item-text"><strong>Cloud Infrastructure</strong>Oracle — Sep 2025</div></div>
+      <div class="list-item"><div class="list-dot"></div><div class="list-item-text"><strong>Mastering in C</strong>CSE Pathshala — Mar 2024</div></div>
+      <div class="list-item"><div class="list-dot"></div><div class="list-item-text"><strong>Responsive Web Design</strong>freeCodeCamp — Oct 2023</div></div>
+    </div>
+    <div class="list-card">
+      <h3>🏆 Achievements</h3>
+      <div class="list-item"><div class="list-dot"></div><div class="list-item-text">Solved 100+ DSA problems on LeetCode — Feb 2026</div></div>
+      <div class="list-item"><div class="list-dot"></div><div class="list-item-text">AWS Technical Essentials (Amazon AWS) — Mar 2025</div></div>
+      <div class="list-item"><div class="list-dot"></div><div class="list-item-text">Earned Oracle Cloud Infrastructure (OCI) Badge — Sep 2025</div></div>
+      <div class="list-item"><div class="list-dot"></div><div class="list-item-text">Competitive coding contests and technical quizzes — Oct 2024</div></div>
+      <div class="list-item"><div class="list-dot"></div><div class="list-item-text">Volunteered with NGO on community development — Jun 2024</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================
+     RESUME SECTION  ← NEW
+     ============================ -->
+<section id="resume">
+  <div class="section-label">My Resume</div>
+  <h2>Resume <span>/ CV</span></h2>
+
+  <div class="resume-download-bar reveal">
+    <p>Download my original resume file, or browse every detail right here on the page.</p>
+    <a href="AbhayKumarSingh_Resume.docx" download class="resume-download-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+      Download Resume (.docx)
+    </a>
+  </div>
+
+  <div class="resume-card reveal">
+
+    <!-- Header -->
+    <div class="resume-header">
+      <div>
+        <div class="resume-name">Abhay Kumar Singh</div>
+        <div class="resume-tagline">B.Tech CSE &nbsp;·&nbsp; Cloud &amp; Backend Developer</div>
+      </div>
+      <div class="resume-contacts">
+        <a href="mailto:abhayofficial2468@gmail.com">📧 abhayofficial2468@gmail.com</a>
+        <a href="tel:+917205444731">📱 +91 7205444731</a>
+        <a href="https://github.com/singhabhaykumar" target="_blank">🐙 github.com/singhabhaykumar</a>
+        <a href="https://www.linkedin.com/in/abhaykumarsingh064" target="_blank">💼 linkedin.com/in/abhaykumarsingh064</a>
+      </div>
+    </div>
+
+    <!-- Skills -->
+    <div class="resume-block">
+      <div class="resume-section-title">Skills</div>
+      <div class="resume-skills-grid">
+        <div><span class="rskill-cat">Languages</span><span class="rskill-val">C, C++, Java</span></div>
+        <div><span class="rskill-cat">Cloud</span><span class="rskill-val">AWS (EC2, S3, RDS, IAM, VPC), Microsoft Azure</span></div>
+        <div><span class="rskill-cat">DevOps</span><span class="rskill-val">Docker, Kubernetes</span></div>
+        <div><span class="rskill-cat">Web</span><span class="rskill-val">HTML, CSS, JavaScript</span></div>
+        <div><span class="rskill-cat">Database</span><span class="rskill-val">MySQL, JDBC</span></div>
+        <div><span class="rskill-cat">Core</span><span class="rskill-val">DSA, Problem-Solving, OOP</span></div>
+        <div><span class="rskill-cat">Soft Skills</span><span class="rskill-val">Collaboration, Adaptability, Leadership</span></div>
+      </div>
+    </div>
+
+    <!-- Projects -->
+    <div class="resume-block">
+      <div class="resume-section-title">Projects</div>
+
+      <div class="resume-entry">
+        <div class="resume-entry-header">
+          <span class="resume-entry-title">Banking Management System</span>
+          <span class="resume-entry-date">Aug 2025 – Sep 2025</span>
+        </div>
+        <div class="resume-entry-sub">C++ &nbsp;|&nbsp; OOP &nbsp;|&nbsp; STL &nbsp;|&nbsp; File Handling &nbsp;|&nbsp; Modular Programming &nbsp;&nbsp;<a href="https://github.com/singhabhaykumar/Banking-Management-System" target="_blank">↗ GitHub</a></div>
+        <ul class="resume-bullets">
+          <li>Designed real-world banking operations — account management, deposits, withdrawals, balance inquiries, and transaction tracking using C++ and OOP concepts.</li>
+          <li>Implemented menu-driven functionalities with proper data handling.</li>
+          <li>Gained hands-on experience in system design and core C++ concepts.</li>
+        </ul>
+      </div>
+
+      <div class="resume-entry">
+        <div class="resume-entry-header">
+          <span class="resume-entry-title">Employee Management System</span>
+          <span class="resume-entry-date">Jun 2025 – Jul 2025</span>
+        </div>
+        <div class="resume-entry-sub">Java &nbsp;|&nbsp; OOP &nbsp;|&nbsp; JDBC &nbsp;|&nbsp; MySQL &nbsp;|&nbsp; Maven &nbsp;&nbsp;<a href="https://github.com/singhabhaykumar/Employee-Management-System" target="_blank">↗ GitHub</a></div>
+        <ul class="resume-bullets">
+          <li>Engineered a system to manage employee records, ensuring structured data storage.</li>
+          <li>Integrated JDBC with MySQL to perform CRUD operations, optimizing queries for better performance.</li>
+          <li>Implemented a console-based interface with exception handling, logging, and validation mechanisms.</li>
+          <li>Applied OOP principles to enhance modularity and scalability.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Training -->
+    <div class="resume-block">
+      <div class="resume-section-title">Training</div>
+      <div class="resume-entry">
+        <div class="resume-entry-header">
+          <span class="resume-entry-title">Object Oriented Programming using C++</span>
+          <span class="resume-entry-date">Jul 2025 – Aug 2025</span>
+        </div>
+        <div class="resume-entry-sub">Lovely Professional University (LPU), Punjab &nbsp;&nbsp;<a href="https://drive.google.com/drive/folders/13Lgx20nIfeJTkAYLvz2y9xLBLh_Gh7ZB" target="_blank">↗ Certificate</a></div>
+        <ul class="resume-bullets">
+          <li>Attended an intensive summer training program on OOP using C++, focusing on problem-solving.</li>
+          <li>Practiced encapsulation, inheritance, polymorphism, and abstraction through hands-on coding exercises.</li>
+          <li>Solved 100+ problems to improve programming analysis and logical thinking.</li>
+          <li><strong>Tech:</strong> C++ OOP Concepts, Encapsulation, Abstraction, Inheritance, Polymorphism, Class Design</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Certificates -->
+    <div class="resume-block">
+      <div class="resume-section-title">Certificates</div>
+      <ul class="resume-bullets">
+        <li><strong>Master Generative AI and Generative AI Tools</strong> &nbsp;|&nbsp; <a href="https://drive.google.com/drive/folders/1cahQfGR_nVLPT1NveerM8bLRzqgnCrlI" target="_blank">Infosys</a> &nbsp;—&nbsp; Aug 2025</li>
+        <li><strong>Cloud Infrastructure</strong> &nbsp;|&nbsp; <a href="https://drive.google.com/drive/folders/1k-DVj8lByT_YqkAcAyPnT-vda3Uhkc64" target="_blank">Oracle</a> &nbsp;—&nbsp; Sep 2025</li>
+        <li><strong>Mastering in C</strong> &nbsp;|&nbsp; <a href="https://drive.google.com/drive/folders/1OAWRSeKNSgnmFU98UsAxpu85TFgNjymw" target="_blank">CSE Pathshala</a> &nbsp;—&nbsp; Mar 2024</li>
+        <li><strong>Responsive Web Design</strong> &nbsp;|&nbsp; <a href="https://drive.google.com/drive/folders/12a26O9foxIixN3UwnKwP-dN9mRi9TG-N" target="_blank">freeCodeCamp</a> &nbsp;—&nbsp; Oct 2023</li>
+      </ul>
+    </div>
+
+    <!-- Achievements -->
+    <div class="resume-block">
+      <div class="resume-section-title">Achievements</div>
+      <ul class="resume-bullets">
+        <li>Solved 100+ Data Structures and Algorithms problems on LeetCode &nbsp;—&nbsp; Feb 2026</li>
+        <li>AWS Technical Essentials (Amazon AWS) &nbsp;—&nbsp; Mar 2025</li>
+        <li>Earned an Oracle Cloud Infrastructure (OCI) Badge &nbsp;—&nbsp; Sep 2025</li>
+        <li>Engaged in competitive coding contests and technical quizzes &nbsp;—&nbsp; Oct 2024</li>
+      </ul>
+    </div>
+
+    <!-- Extracurricular -->
+    <div class="resume-block">
+      <div class="resume-section-title">Extracurricular</div>
+      <ul class="resume-bullets">
+        <li>Participated in group discussions and delivered technical presentations &nbsp;—&nbsp; Oct 2025</li>
+        <li>Volunteered with an NGO on community development and environmental initiatives &nbsp;—&nbsp; Jun 2024</li>
+        <li>Anchored multiple school-level events, displaying confidence and leadership on stage &nbsp;—&nbsp; Mar 2023</li>
+      </ul>
+    </div>
+
+    <!-- Education -->
+    <div class="resume-block">
+      <div class="resume-section-title">Education</div>
+      <div class="resume-entry">
+        <div class="resume-entry-header"><span class="resume-entry-title">B.Tech – Computer Science &amp; Engineering</span><span class="resume-entry-date">Aug 2023 – Present</span></div>
+        <div class="resume-entry-sub">Lovely Professional University, Phagwara, Punjab &nbsp;·&nbsp; CGPA: 6.46</div>
+      </div>
+      <div class="resume-entry">
+        <div class="resume-entry-header"><span class="resume-entry-title">Intermediate (12th)</span><span class="resume-entry-date">Apr 2021 – Mar 2022</span></div>
+        <div class="resume-entry-sub">Kendriya Vidyalaya Sukna, Siliguri, WB &nbsp;·&nbsp; CGPA: 6.6</div>
+      </div>
+      <div class="resume-entry">
+        <div class="resume-entry-header"><span class="resume-entry-title">Matriculation (10th)</span><span class="resume-entry-date">Apr 2019 – Mar 2020</span></div>
+        <div class="resume-entry-sub">Kendriya Vidyalaya INS Chilka, Khurda, Odisha &nbsp;·&nbsp; CGPA: 6.9</div>
+      </div>
+    </div>
+
+  </div><!-- /resume-card -->
+</section>
+
+<!-- CONTACT -->
+<div id="contact">
+  <div class="inner">
+    <div class="section-label" style="justify-content:center;">Let's connect</div>
+    <h2 style="margin-bottom:16px;">Get In <span>Touch</span></h2>
+    <p style="color:var(--muted);font-size:1rem;font-weight:300;">Open to internship opportunities, collaborative projects, or just a conversation about tech.</p>
+    <div class="contact-links">
+      <a href="mailto:abhayofficial2468@gmail.com" class="contact-link"><svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>Email Me</a>
+      <a href="https://github.com/singhabhaykumar" target="_blank" class="contact-link"><svg viewBox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>GitHub</a>
+      <a href="https://www.linkedin.com/in/abhaykumarsingh064" target="_blank" class="contact-link"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>LinkedIn</a>
+      <a href="tel:+917205444731" class="contact-link"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>+91 7205444731</a>
+    </div>
+  </div>
+</div>
+
+<footer><p>Designed & Built by Abhay Kumar Singh &nbsp;·&nbsp; 2026</p></footer>
+
+<script>
+  window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); });
+  document.getElementById('menuToggle').addEventListener('click', () => { document.getElementById('navLinks').classList.toggle('open'); });
+  document.querySelectorAll('.nav-links a').forEach(a => { a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open')); });
+  const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
